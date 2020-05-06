@@ -1,0 +1,27 @@
+package vn.com.onetech.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+
+import vn.com.onetech.entity.Product;
+import vn.com.onetech.service.IProductService;
+
+@Controller
+public class ShopController {
+	
+	@Autowired
+	private IProductService productService;
+	@RequestMapping("/shop")
+	public ModelAndView getProduct() {
+		ModelAndView mav = new ModelAndView();
+		List<Product> listProduct= productService.findAllProduct();
+		mav.addObject("listProducts", listProduct);
+		mav.setViewName("business/shop/shop");
+		return mav;
+	}
+}
