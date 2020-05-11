@@ -22,5 +22,7 @@ public class Sale {
 	 private String name;
 	 private int valuess;
 	 private String notes;
+	 private Date start;
+	 private Date end;
 
 }

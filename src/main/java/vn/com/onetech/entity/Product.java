@@ -7,6 +7,8 @@ package vn.com.onetech.entity;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -35,9 +38,7 @@ public class Product implements Serializable{
     private String amount;
     private String price;
     @OneToMany(mappedBy = "product")
-    private List<OrderDetail> orderDetail;
-    @OneToMany(mappedBy = "product")
-    private List<InvoiceDetail> invoiceDetail;
+    private List<Review> review;
     @ManyToOne
     @JoinColumn(name="productTypesId")
     private ProductType productType;
@@ -47,6 +48,12 @@ public class Product implements Serializable{
     @OneToOne
     @JoinColumn(name="configurationId")
     private Configurations configuration;
+    @OneToOne
+    @JoinColumn(name="imageId")
+    private Images images;
+    @ManyToMany(mappedBy = "products")
+    private Set<Order> orders;
+    
 
    
     

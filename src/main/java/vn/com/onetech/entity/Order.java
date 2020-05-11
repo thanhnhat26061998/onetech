@@ -7,6 +7,9 @@ package vn.com.onetech.entity;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,6 +17,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -34,13 +39,17 @@ public class Order implements Serializable{
     private String status;
     private String payments;
     private String notes;
+    private String totals;
     @ManyToOne
-    @JoinColumn(name="customersId")
-    private Customer customer;
-    @OneToMany(mappedBy = "orders")
-    private List<Invoice> invoice;
-    @OneToMany(mappedBy = "orders")
-    private List<OrderDetail> orderDetail;
+    @JoinColumn(name="userId")
+    private User users;
+    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+    		name="oder_detail",
+    		joinColumns = @JoinColumn(name="orderId"),
+    		inverseJoinColumns = @JoinColumn(name="productId")
+    )
+    private Set<Product> products;
 
   
     

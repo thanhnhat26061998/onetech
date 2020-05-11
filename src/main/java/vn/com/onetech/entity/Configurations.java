@@ -16,7 +16,7 @@ import lombok.Data;
 @Table(name="configuration")
 public class Configurations {
 	@Id
-	 @Column(name = "configurationId")
+	@Column(name = "configurationId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 	private String screen;

@@ -16,7 +16,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -37,11 +36,9 @@ public class Coupon implements Serializable{
     private Date time;
     private int amount;
     private String price;
-    @OneToMany(mappedBy = "coupon")
-    private List<CouponDetail> couponDetail;
     @ManyToOne
-    @JoinColumn(name="staffsId")
-    private Staff staff;
+    @JoinColumn(name="userId")
+    private User user;
     @ManyToOne
     @JoinColumn(name="suppliersId")
     private Supplier supplier;
