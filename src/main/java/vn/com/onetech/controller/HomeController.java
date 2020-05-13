@@ -25,7 +25,7 @@ public class HomeController {
 	private IProductService productService;
 	
 	
-	@RequestMapping("/home")
+	@RequestMapping("/homie")
 	public String listProducts(Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
 		final int currentPage = page.orElse(1);
         final int pageSize = size.orElse(10);
@@ -46,21 +46,38 @@ public class HomeController {
 	
 	@RequestMapping("/search")
 	public String listProductsBymane(Model model, @RequestParam("page") Optional<Integer> page,
-			@RequestParam("name") String name,  @RequestParam("price") int price,
+			@RequestParam("name") String name,  @RequestParam("price") Optional<Integer> price,
 			@RequestParam("size") Optional<Integer> size) {
 		final int currentPage = page.orElse(1);
         final int pageSize = size.orElse(10);
-        int amount = productService.getAmoutByName(name);
-        model.addAttribute("amout", amount);
-        Page<Product> productPage = productService.productByName2(name, PageRequest.of(currentPage-1, pageSize), price);
-        model.addAttribute("productPage", productPage);
-		int totalPage = productPage.getTotalPages();
-		if (totalPage>0) {
-			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPage)
-					.boxed()
-	                .collect(Collectors.toList());
-			model.addAttribute("pageNumbers", pageNumbers);
+        int prices= page.orElse(0);
+        if (prices!=0) {
+        	int amount = productService.getAmoutByName(name);
+	        model.addAttribute("amout", amount);
+        	Page<Product> productPage = productService.productByName2(name, PageRequest.of(currentPage-1, pageSize), prices);
+        	model.addAttribute("productPage", productPage);
+    		int totalPage = productPage.getTotalPages();
+    		if (totalPage>0) {
+    			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPage)
+    					.boxed()
+    	                .collect(Collectors.toList());
+    			model.addAttribute("pageNumbers", pageNumbers);
+    		}
+		}else {
+			int amount = productService.getAmoutByName(name);
+	        model.addAttribute("amout", amount);
+			Page<Product> productPage = productService.productByName(name, PageRequest.of(currentPage-1, pageSize));
+        	model.addAttribute("productPage", productPage);
+    		int totalPage = productPage.getTotalPages();
+    		if (totalPage>0) {
+    			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPage)
+    					.boxed()
+    	                .collect(Collectors.toList());
+    			model.addAttribute("pageNumbers", pageNumbers);
+    		}
 		}
+        
+        
 		return "business/home/shop";
 	}
 	
@@ -101,6 +118,94 @@ public class HomeController {
 			model.addAttribute("pageNumbers", pageNumbers);
 		}
 		return "business/home/shop";
+	}
+	
+	
+	//home
+	@RequestMapping("/home")
+	public String getProduct(Model model, @RequestParam("page") Optional<Integer> page, 
+			@RequestParam("size") Optional<Integer> size, @RequestParam("price") Optional<Integer> prices,
+			@RequestParam("name") Optional<String> names, @RequestParam("typeName") Optional<String> typeNames) {
+		final int currentPage = page.orElse(1);
+        final int pageSize = size.orElse(10);
+        final int price = prices.orElse(0);
+        final String name = names.orElse(null);
+        final String typeName = typeNames.orElse(null);
+        model.addAttribute("price", price);
+        model.addAttribute("name", name);
+        model.addAttribute("typeName", typeName);
+        if (typeName==null&&name==null&&price==0) {
+        	int amount = productService.getAmoutAll();
+            model.addAttribute("amout", amount);
+            Page<Product> productPage = productService.findPaginated(PageRequest.of(currentPage-1, pageSize));
+            model.addAttribute("productPage", productPage);
+    		int totalPage = productPage.getTotalPages();
+    		if (totalPage>0) {
+    			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPage)
+    					.boxed()
+    	                .collect(Collectors.toList());
+    			model.addAttribute("pageNumbers", pageNumbers);
+    		}
+    		model.addAttribute("price", price);
+            model.addAttribute("name", name);
+            model.addAttribute("typeName", typeName);
+			
+		}
+        if (typeName!=null&&name==null&&price==0) {
+        	int amount = productService.getAmoutByNameMenu(typeName);
+            model.addAttribute("amout", amount);
+            Page<Product> productPage = productService.findPrdBynameMenu(typeName, PageRequest.of(currentPage-1, pageSize));
+            model.addAttribute("productPage", productPage);
+    		int totalPage = productPage.getTotalPages();
+    		if (totalPage>0) {
+    			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPage)
+    					.boxed()
+    	                .collect(Collectors.toList());
+    			model.addAttribute("pageNumbers", pageNumbers);
+    		}
+		}
+        if (typeName==null&&name==null&&price!=0) {
+        	int amount = productService.getAmoutByPrice(price);
+            model.addAttribute("amout", amount);
+            Page<Product> productPage = productService.findPrdByPrice(price, PageRequest.of(currentPage-1, pageSize));
+            model.addAttribute("productPage", productPage);
+    		int totalPage = productPage.getTotalPages();
+    		if (totalPage>0) {
+    			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPage)
+    					.boxed()
+    	                .collect(Collectors.toList());
+    			model.addAttribute("pageNumbers", pageNumbers);
+    		}
+			
+		}
+        if (typeName==null&&name!=null&&price==0) {
+			int amount = productService.getAmoutByName(name);
+	        model.addAttribute("amout", amount);
+			Page<Product> productPage = productService.productByName(name, PageRequest.of(currentPage-1, pageSize));
+        	model.addAttribute("productPage", productPage);
+    		int totalPage = productPage.getTotalPages();
+    		if (totalPage>0) {
+    			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPage)
+    					.boxed()
+    	                .collect(Collectors.toList());
+    			model.addAttribute("pageNumbers", pageNumbers);
+    		}
+		}
+        if (typeName==null&&name!=null&&price!=0) {
+        	int amount = productService.getAmoutByPriceAndName(price,name);
+	        model.addAttribute("amout", amount);
+        	Page<Product> productPage = productService.productByName2(name, PageRequest.of(currentPage-1, pageSize), price);
+        	model.addAttribute("productPage", productPage);
+    		int totalPage = productPage.getTotalPages();
+    		if (totalPage>0) {
+    			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPage)
+    					.boxed()
+    	                .collect(Collectors.toList());
+    			model.addAttribute("pageNumbers", pageNumbers);
+    		}
+			
+		}
+		return"business/home/shop";
 	}
 	
 	

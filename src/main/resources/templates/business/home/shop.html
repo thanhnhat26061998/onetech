@@ -161,14 +161,14 @@ xmlns="http://www.w3.org/1999/xhtml"
 						<div class="sidebar_section">
 							<div class="sidebar_title">Price</div>
 							<ul class="sidebar_categories">
-								<li><a th:href="@{/homee(price=900000)}">dưới 1 triệu</a></li>
-								<li><a th:href="@{/homee(price=5000000)}">dưới 5 triệu</a></li>
-								<li><a th:href="@{/homee(price=7000000)}">dưới 7 triệu</a></li>
-								<li><a th:href="@{/homee(price=10000000)}">dưới 10 triệu</a></li>
-								<li><a th:href="@{/homee(price=13000000)}">dưới 13 triệu</a></li>
-								<li><a th:href="@{/homee(price=15000000)}">dưới 15 triệu</a></li>
-								<li><a th:href="@{/homee(price=20000000)}">dưới 20 triệu</a></li>
-								<li><a th:href="@{/homee(price=25000000)}">dưới 25 triệu</a></li>
+								<li><a th:href="@{/home(price=900000)}">dưới 1 triệu</a></li>
+								<li><a th:href="@{/home(price=5000000)}">dưới 5 triệu</a></li>
+								<li><a th:href="@{/home(price=7000000)}">dưới 7 triệu</a></li>
+								<li><a th:href="@{/home(price=10000000)}">dưới 10 triệu</a></li>
+								<li><a th:href="@{/home(price=13000000)}">dưới 13 triệu</a></li>
+								<li><a th:href="@{/home(price=15000000)}">dưới 15 triệu</a></li>
+								<li><a th:href="@{/home(price=20000000)}">dưới 20 triệu</a></li>
+								<li><a th:href="@{/home(price=25000000)}">dưới 25 triệu</a></li>
 							</ul>
 						</div>
 						<div class="sidebar_section filter_by_section">
@@ -268,9 +268,35 @@ xmlns="http://www.w3.org/1999/xhtml"
 						</div>
 						<div th:if="${productPage.totalPages > 0}" class="pagination"
 					        th:each="pageNumber : ${pageNumbers}">
-					        <a th:href="@{/home(size=${productPage.size}, page=${pageNumber})}"
-					            th:text=${pageNumber}
-					            th:class="${pageNumber==productPage.number + 1} ? active"></a>
+								<div th:if="${name==null&&price==0&&typeName==null}">
+									<a th:href="@{/home(size=${productPage.size}, page=${pageNumber})}"
+							            th:text=${pageNumber}
+							            th:class="${pageNumber==productPage.number + 1} ? active"></a>
+								</div>
+								
+								<div th:if="${name==null&&price!=0&&typeName==null}">
+									<a th:href="@{/home(size=${productPage.size}, page=${pageNumber}, price=${price})}"
+							            th:text=${pageNumber}
+							            th:class="${pageNumber==productPage.number + 1} ? active"></a>
+								</div>
+								
+								<div th:if="${name==null&&price==0&&typeName!=null}">
+									<a th:href="@{/home(size=${productPage.size}, page=${pageNumber}, typeName=${typeName})}"
+							            th:text=${pageNumber}
+							            th:class="${pageNumber==productPage.number + 1} ? active"></a>
+								</div>
+								
+								<div th:if="${name!=null&&price==0&&typeName==null}">
+									<a th:href="@{/home(size=${productPage.size}, page=${pageNumber}, name=${name})}"
+							            th:text=${pageNumber}
+							            th:class="${pageNumber==productPage.number + 1} ? active"></a>
+								</div>
+								
+								<div th:if="${name!=null&&price!=0&&typeName==null}">
+									<a th:href="@{/home(size=${productPage.size}, page=${pageNumber}, price=${price}), name=${name}}"
+							            th:text=${pageNumber}
+							            th:class="${pageNumber==productPage.number + 1} ? active"></a>
+								</div>
 					    </div>
 					</div>
 

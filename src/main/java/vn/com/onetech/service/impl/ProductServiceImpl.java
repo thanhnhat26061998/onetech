@@ -147,15 +147,9 @@ public class ProductServiceImpl implements IProductService {
     				products.add(prd);
     			}
     		}
-		}else {
-	        List<Product> ords = productDao.findAll();
-	        for (Product prd : ords) {
-				if (prd.getName().equals(name)) {
-					products.add(prd);
-				}
-			}
-			
 		}
+			
+		
         
         List<Product> list;
         if (products.size()<startItem) {
@@ -238,6 +232,18 @@ public class ProductServiceImpl implements IProductService {
 		List<Product> ords = productDao.findAll();
         for (Product prd : ords) {
 			if (prd.getPrice()<=price) {
+				amout++;
+			}
+		}
+		return amout;
+	}
+	// đếm số sản phẩm trả về theo tên và giá
+	@Override
+	public int getAmoutByPriceAndName(int price, String name) {
+		int amout=0;
+		List<Product> ords = productDao.findAll();
+		for (Product prd : ords) {
+			if (prd.getPrice()<=price&&prd.getName()==name) {
 				amout++;
 			}
 		}

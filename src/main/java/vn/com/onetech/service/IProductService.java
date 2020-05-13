@@ -26,5 +26,6 @@ public interface IProductService {
     int getAmoutByNameMenu(String name);
     Page<Product> findPrdByPrice(int price, Pageable pageable);
     int getAmoutByPrice(int price);
+    int getAmoutByPriceAndName(int price, String name);
 
 }
