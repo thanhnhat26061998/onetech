@@ -1,32 +1,41 @@
--- insert configurations
-INSERT INTO configuration (configuration_id, camera_front, camera_rear, chipset, cpu, pin, ram, rom, screen, systems)
-VALUES (1, "7 MP, f/2.2", "2160p@24/30/60fps, 1080p@30/60/120/240fps", "Apple A11 Bionic", "Hexa-core", "3000", "3gb", "64gb", "Super AMOLED,5.8 inches,1125 x 2436 pixels","iOS 11");
+-- insert product type
+INSERT INTO `product_type` (`product_type_id`, `name`, `notes`) VALUES 
+('1', 'iphone', NULL), 
+('2', 'lg', NULL),
+('3', 'samsung', NULL),
+('4', 'xiaomi', NULL),
+('5', 'huawei', NULL),
+('6', 'google', NULL),
+('7', 'sony', NULL),
+('8', '', NULL),
+('9', '', NULL);
+-- insert image
+INSERT INTO `image` (`image_id`, `image1`, `image2`, `image3`, `image4`, `image5`, `image6`, `notes`) VALUES 
+('1', 'business/img/iphone11.jpg', NULL, NULL, NULL, NULL, NULL, 'iphone'),
+('2', 'business/img/iphone8red.jpg', NULL, NULL, NULL, NULL, NULL, 'iphone'),
+('3', 'business/img/iphone8trang.jpg', NULL, NULL, NULL, NULL, NULL, 'iphone'),
+('4', 'business/img/lgg8do.jpg', NULL, NULL, NULL, NULL, NULL, 'lg'),
+('5', 'business/img/lgv50den.jpg', NULL, NULL, NULL, NULL, NULL, 'lg'),
+('6', 'business/img/lgv50den.jpg', NULL, NULL, NULL, NULL, NULL, 'lg'),
+('7', 'business/img/samsungs9den_.jpg', NULL, NULL, NULL, NULL, NULL, 'samsung'),
+('8', 'business/img/samsungs9tim.png', NULL, NULL, NULL, NULL, NULL, 'iphone');
 -- insert sale
-INSERT INTO sale (sale_id, notes, valuess)
-VALUES (1, "", "5"),
-(2, "", "10"),
-(3, "", "15"),
-(4, "", "20"),
-(5, "", "25"),
-(6, "", "12"),(7, "", "8");
--- insert type product
-INSERT INTO product_type (product_type_id, name, notes)
-VALUES (1, "Iphone", ""),
-(2, "Samsung", ""),
-(3, "Lg", ""),
-(4, "Xiaomi", ""),
-(5, "Nokia", ""),
-(6, "Ipad", "");
+INSERT INTO `sale` (`sale_id`, `end`, `name`, `notes`, `start`, `valuess`) VALUES ('1', NULL, NULL, NULL, NULL, '10');
 -- insert product
-INSERT INTO product (id, amount, name, color, described, image, price, product_types_id, sales_id, configuration_id)
-VALUES (1, 10, "SAMSUNG GALAXY NOTE 10 ", "", "", "business/img/samsungnote10.jpg", 1000000,2,1,1),
- (2, 10, "SAMSUNG Note 10 Plus", "", "", "business/img/samsungnote10.jpg", 1000000,2,1,1),
-  (3, 10, "Iphone 11 256gb ", "", "", "business/img/iphone11den.png", 1000000,1,1,1),
-   (4, 10, "LG v50 quốc tế ", "black", "", "business/img/lgv50den.jpg", 1000000,3,1,1),
-    (5, 10, "IPHONE XS MỚI", "", "", "business/img/samsungnote10.jpg", 1000000,1,1,1),
-     (6, 10, "IPHONE 8 ", "black", "", "business/img/iphone8den.jpg", 1000000,1,1,1),
-      (7, 10, "Lg g8 thinQ", "red", "", "business/img/lgg8do.jpg", 1000000,3,1,1),
-       (8, 10, "Lg V50", "black", "", "business/img/lgv50den.jpg", 1000000,3,1,1),
-        (9, 10, "Iphone 11", "", "", "business/img/iphone11.jpg", 1000000,1,1,1),
-         (10, 10, "Iphone X ", "black", "", "business/img/iphonexden.jpg", 1000000,1,1,1),
-          (11, 10, "Samsung s9", "", "", "business/img/samsungs9.jpg", 1000000,2,1,1);
+INSERT INTO `product` (`id`, `amount`, `color`, `described`, `image`, `name`, `price`, `configuration_id`, `image_id`, `product_types_id`, `sales_id`) VALUES 
+('1', '12', NULL, NULL, NULL, 'iphone x', '10000000', NULL, '1', '1', '1'),
+('2', '12', NULL, NULL, NULL, 'iphone 8', '800000', NULL, '2', '1', '1'),
+('3', '12', NULL, NULL, NULL, 'iphone 11', '2000000', NULL, '1', '1', '1'),
+('4', '12', NULL, NULL, NULL, 'lg g8', '400000', NULL, '2', '4', '1'),
+('5', '12', NULL, NULL, NULL, 'lg v50', '700000', NULL, '2', '5', '1'),
+('6', '12', NULL, NULL, NULL, 'lg g7', '300000', NULL, '2', '5', '1'),
+('7', '12', NULL, NULL, NULL, 'samsung note 10', '1000000', NULL, '7', '3', '1'),
+('8', '12', NULL, NULL, NULL, 'samsung s9', '800000', NULL, '8', '3', '1'),
+('9', '12', NULL, NULL, NULL, 'iphone 11', '1000000', NULL, '1', '1', '1'),
+('10', '12', NULL, NULL, NULL, 'iphone 11', '1000000', NULL, '1', '1', '1'),
+('11', '12', NULL, NULL, NULL, 'iphone 11', '1000000', NULL, '1', '1', '1'),
+('12', '12', NULL, NULL, NULL, 'iphone 11', '1000000', NULL, '1', '1', '1'),
+('13', '12', NULL, NULL, NULL, 'iphone 11', '1000000', NULL, '1', '1', '1'),
+('14', '12', NULL, NULL, NULL, 'iphone 11', '1000000', NULL, '1', '1', '1'),
+('15', '12', NULL, NULL, NULL, 'iphone 8', '800000', NULL, '2', '1', '1'),
+('16', '12', NULL, NULL, NULL, 'iphone 8', '880000', NULL, '2', '1', '1');

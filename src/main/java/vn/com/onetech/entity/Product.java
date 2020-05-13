@@ -36,7 +36,7 @@ public class Product implements Serializable{
     private String described;
     private String color;
     private String amount;
-    private String price;
+    private int price;
     @OneToMany(mappedBy = "product")
     private List<Review> review;
     @ManyToOne
@@ -53,6 +53,7 @@ public class Product implements Serializable{
     private Images images;
     @ManyToMany(mappedBy = "products")
     private Set<Order> orders;
+    
     
 
    

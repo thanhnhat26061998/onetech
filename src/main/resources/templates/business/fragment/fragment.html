@@ -86,23 +86,25 @@
 						<div class="header_search">
 							<div class="header_search_content">
 								<div class="header_search_form_container">
-									<form action="#" class="header_search_form clearfix">
-										<input type="search" required="required" class="header_search_input" placeholder="Search for products...">
+									<form action="/search" method="get"  class="header_search_form clearfix">
+										<input type="search" required="required" class="header_search_input" placeholder="Search for products..." name ="name">
 										<div class="custom_dropdown">
 											<div class="custom_dropdown_list">
-												<span class="custom_dropdown_placeholder clc">All Categories</span>
+												<span class="custom_dropdown_placeholder clc">-----------All price</span>
 												<i class="fas fa-chevron-down"></i>
+											
 												<ul class="custom_list clc">
-													<li><a class="clc" href="#">All Categories</a></li>
-													<li><a class="clc" href="#">Computers</a></li>
-													<li><a class="clc" href="#">Laptops</a></li>
-													<li><a class="clc" href="#">Cameras</a></li>
-													<li><a class="clc" href="#">Hardware</a></li>
-													<li><a class="clc" href="#">Smartphones</a></li>
+													<li><span value="100000" class="clc"></span></li>
+													<li><a class="clc" th:href="@{/homes(price=1000000)}">1 triệu</a></li>
+													<li><a class="clc" th:href="@{/homes(price=3000000)}">3 triệu</a></li>
+													<li><a class="clc" th:href="@{/homes(price=5000000)}">5 triệu</a></li>
+													<li><a class="clc" th:href="@{/homes(price=10000000)}">10 triệu</a></li>
+													<li><a class="clc" th:href="@{/homes(price=15000000)}">15 triệu</a></li>
+													<li><a class="clc" th:href="@{/homes(price=20000000)}">20 triệu</a></li>
 												</ul>
 											</div>
 										</div>
-										<button type="submit" class="header_search_button trans_300" value="Submit"><img src="images/search.png" alt=""></button>
+										<button type="submit" class="header_search_button trans_300" value="Submit"><img src="business/images/search.png" alt=""></button>
 									</form>
 								</div>
 							</div>
@@ -141,7 +143,7 @@
 		
 		<!-- Main Navigation -->
 
-		<nav class="main_nav" th:fragment="nav_main">
+		<nav class="main_nav">
 			<div class="container">
 				<div class="row">
 					<div class="col">
@@ -157,31 +159,16 @@
 								</div>
 
 								<ul class="cat_menu">
-									<li><a href="#">Computers & Laptops <i class="fas fa-chevron-right ml-auto"></i></a></li>
-									<li><a href="#">Cameras & Photos<i class="fas fa-chevron-right"></i></a></li>
-									<li class="hassubs">
-										<a href="#">Hardware<i class="fas fa-chevron-right"></i></a>
-										<ul>
-											<li class="hassubs">
-												<a href="#">Menu Item<i class="fas fa-chevron-right"></i></a>
-												<ul>
-													<li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-													<li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-													<li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-													<li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-												</ul>
-											</li>
-											<li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-											<li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-											<li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-										</ul>
-									</li>
-									<li><a href="#">Smartphones & Tablets<i class="fas fa-chevron-right"></i></a></li>
-									<li><a href="#">TV & Audio<i class="fas fa-chevron-right"></i></a></li>
-									<li><a href="#">Gadgets<i class="fas fa-chevron-right"></i></a></li>
-									<li><a href="#">Car Electronics<i class="fas fa-chevron-right"></i></a></li>
-									<li><a href="#">Video Games & Consoles<i class="fas fa-chevron-right"></i></a></li>
-									<li><a href="#">Accessories<i class="fas fa-chevron-right"></i></a></li>
+		
+									
+									<li><a th:href="@{/homes(name=iphone)}">Iphone <i class="fas fa-chevron-right ml-auto"></i></a></li>
+									<li><a th:href="@{/homes(name=lg)}">Lg <i class="fas fa-chevron-right ml-auto"></i></a></li>
+									<li><a th:href="@{/homes(name=samsung)}">Samsung <i class="fas fa-chevron-right ml-auto"></i></a></li>
+									<li><a th:href="@{/homes(name=xiaomi)}">Xiaomi <i class="fas fa-chevron-right ml-auto"></i></a></li>
+									<li><a th:href="@{/homes(name=nokia)}">Nokia <i class="fas fa-chevron-right ml-auto"></i></a></li>
+									<li><a th:href="@{/homes(name=google)}">Google <i class="fas fa-chevron-right ml-auto"></i></a></li>
+									<li><a th:href="@{/homes(name=huawei)}">Huawei <i class="fas fa-chevron-right ml-auto"></i></a></li>
+									<li><a th:href="@{/homes(name=oppo)}">Oppo <i class="fas fa-chevron-right ml-auto"></i></a></li>
 								</ul>
 							</div>
 
@@ -224,16 +211,16 @@
 									</div>
 								</div>
 							</div>
-
 						</div>
 					</div>
 				</div>
 			</div>
+			
 		</nav>
 		
 		<!-- Menu -->
 
-		<div class="page_menu" th:fragment="header_menu">
+		<div class="page_menu" th:fragment="header_menu" >
 			<div class="container">
 				<div class="row">
 					<div class="col">
