@@ -125,15 +125,18 @@ public class HomeController {
 	@RequestMapping("/home")
 	public String getProduct(Model model, @RequestParam("page") Optional<Integer> page, 
 			@RequestParam("size") Optional<Integer> size, @RequestParam("price") Optional<Integer> prices,
-			@RequestParam("name") Optional<String> names, @RequestParam("typeName") Optional<String> typeNames) {
+			@RequestParam("name") Optional<String> names, @RequestParam("typeName") Optional<String> typeNames,
+			@RequestParam("sale") Optional<String> sales) {
 		final int currentPage = page.orElse(1);
         final int pageSize = size.orElse(10);
         final int price = prices.orElse(0);
         final String name = names.orElse(null);
         final String typeName = typeNames.orElse(null);
+        final String sale = sales.orElse(null);
         model.addAttribute("price", price);
         model.addAttribute("name", name);
         model.addAttribute("typeName", typeName);
+        model.addAttribute("sale", sale);
         if (typeName==null&&name==null&&price==0) {
         	int amount = productService.getAmoutAll();
             model.addAttribute("amout", amount);
@@ -195,6 +198,20 @@ public class HomeController {
         	int amount = productService.getAmoutByPriceAndName(price,name);
 	        model.addAttribute("amout", amount);
         	Page<Product> productPage = productService.productByName2(name, PageRequest.of(currentPage-1, pageSize), price);
+        	model.addAttribute("productPage", productPage);
+    		int totalPage = productPage.getTotalPages();
+    		if (totalPage>0) {
+    			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPage)
+    					.boxed()
+    	                .collect(Collectors.toList());
+    			model.addAttribute("pageNumbers", pageNumbers);
+    		}
+			
+		}
+        if (typeName==null&&name==null&&price==0&&sale!=null) {
+        	int amount = productService.getAmoutBySale(sale);
+	        model.addAttribute("amout", amount);
+        	Page<Product> productPage = productService.findPrdBySale(sale, PageRequest.of(currentPage-1, pageSize));
         	model.addAttribute("productPage", productPage);
     		int totalPage = productPage.getTotalPages();
     		if (totalPage>0) {

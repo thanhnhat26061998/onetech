@@ -159,6 +159,11 @@ xmlns="http://www.w3.org/1999/xhtml"
 					<!-- Shop Sidebar -->
 					<div class="shop_sidebar">
 						<div class="sidebar_section">
+							<div class="sidebar_title">
+							<ul class="sidebar_categories">
+								<li><a th:href="@{/home(sale=new)}">Sales</a></li>
+								</ul>
+							</div>
 							<div class="sidebar_title">Price</div>
 							<ul class="sidebar_categories">
 								<li><a th:href="@{/home(price=900000)}">dưới 1 triệu</a></li>
@@ -233,7 +238,11 @@ xmlns="http://www.w3.org/1999/xhtml"
 							<th:block th:each="product, iStat : ${productPage.content}"
 							th:style="${iStat.odd}? 'font-weight: bold;'"
             				th:alt-title="${iStat.even}? 'even' : 'odd'">
-							<div class="product_item discount">
+            				
+            				
+							
+							
+							<div class="product_item is_new" th:if="${product.sale.name=='new'}">
 								<div class="product_border"></div>
 								<div class="product_image d-flex flex-column align-items-center justify-content-center"><img 
 								th:src="@{${product.images.image1}}" alt=""></div>
@@ -243,7 +252,22 @@ xmlns="http://www.w3.org/1999/xhtml"
 									<div class="product_name"><div><a href="#" tabindex="0" th:utext="${product.name}"></a></div></div>
 								</div>
 								<ul class="product_marks">
-									<li class="product_mark product_discount">-10%</li>
+									
+										
+								</ul>
+							</div>
+							
+							<div class="product_item discount" th:if="${product.sale.name!='new'}">
+								<div class="product_border"></div>
+								<div class="product_image d-flex flex-column align-items-center justify-content-center"><img 
+								th:src="@{${product.images.image1}}" alt=""></div>
+								
+								<div class="product_content">
+									<div class="product_price" th:utext="${product.price}"></div>
+									<div class="product_name"><div><a href="#" tabindex="0" th:utext="${product.name}"></a></div></div>
+								</div>
+								<ul class="product_marks">
+									<li class="product_mark product_discount" th:utext="${product.sale.name}"></li>
 									<li class="product_mark product_new">new</li>
 								</ul>
 							</div>
@@ -268,7 +292,7 @@ xmlns="http://www.w3.org/1999/xhtml"
 						</div>
 						<div th:if="${productPage.totalPages > 0}" class="pagination"
 					        th:each="pageNumber : ${pageNumbers}">
-								<div th:if="${name==null&&price==0&&typeName==null}">
+								<div th:if="${name==null&&price==0&&typeName==null&&sale==null}">
 									<a th:href="@{/home(size=${productPage.size}, page=${pageNumber})}"
 							            th:text=${pageNumber}
 							            th:class="${pageNumber==productPage.number + 1} ? active"></a>
@@ -294,6 +318,11 @@ xmlns="http://www.w3.org/1999/xhtml"
 								
 								<div th:if="${name!=null&&price!=0&&typeName==null}">
 									<a th:href="@{/home(size=${productPage.size}, page=${pageNumber}, price=${price}), name=${name}}"
+							            th:text=${pageNumber}
+							            th:class="${pageNumber==productPage.number + 1} ? active"></a>
+								</div>
+								<div th:if="${name==null&&price==0&&typeName==null&&sale!=null}">
+									<a th:href="@{/home(size=${productPage.size}, page=${pageNumber}, sale=${sale})}"
 							            th:text=${pageNumber}
 							            th:class="${pageNumber==productPage.number + 1} ? active"></a>
 								</div>

@@ -6,9 +6,7 @@ INSERT INTO `product_type` (`product_type_id`, `name`, `notes`) VALUES
 ('4', 'xiaomi', NULL),
 ('5', 'huawei', NULL),
 ('6', 'google', NULL),
-('7', 'sony', NULL),
-('8', '', NULL),
-('9', '', NULL);
+('7', 'sony', NULL);
 -- insert image
 INSERT INTO `image` (`image_id`, `image1`, `image2`, `image3`, `image4`, `image5`, `image6`, `notes`) VALUES 
 ('1', 'business/img/iphone11.jpg', NULL, NULL, NULL, NULL, NULL, 'iphone'),
@@ -20,22 +18,32 @@ INSERT INTO `image` (`image_id`, `image1`, `image2`, `image3`, `image4`, `image5
 ('7', 'business/img/samsungs9den_.jpg', NULL, NULL, NULL, NULL, NULL, 'samsung'),
 ('8', 'business/img/samsungs9tim.png', NULL, NULL, NULL, NULL, NULL, 'iphone');
 -- insert sale
-INSERT INTO `sale` (`sale_id`, `end`, `name`, `notes`, `start`, `valuess`) VALUES ('1', NULL, NULL, NULL, NULL, '10');
+-- insert sale
+INSERT INTO `sale` (`sale_id`, `end`, `name`, `notes`, `start`, `valuess`) VALUES ('1', NULL, '-10%', NULL, NULL, '10');
+INSERT INTO `sale` (`sale_id`, `end`, `name`, `notes`, `start`, `valuess`) VALUES 
+('2', NULL, '-15%', NULL, NULL, '12'),
+('3', NULL, 'new', NULL, NULL, null);
 -- insert product
 INSERT INTO `product` (`id`, `amount`, `color`, `described`, `image`, `name`, `price`, `configuration_id`, `image_id`, `product_types_id`, `sales_id`) VALUES 
-('1', '12', NULL, NULL, NULL, 'iphone x', '10000000', NULL, '1', '1', '1'),
+('1', '12', NULL, NULL, NULL, 'iphone x', '10000000', NULL, '1', '1', '2'),
 ('2', '12', NULL, NULL, NULL, 'iphone 8', '8000000', NULL, '2', '1', '1'),
-('3', '12', NULL, NULL, NULL, 'iphone 11', '2000000', NULL, '1', '1', '1'),
+('3', '12', NULL, NULL, NULL, 'iphone 11', '2000000', NULL, '1', '1', '3'),
 ('4', '12', NULL, NULL, NULL, 'lg g8', '4000000', NULL, '4', '2', '1'),
-('5', '12', NULL, NULL, NULL, 'lg v50', '7000000', NULL, '5', '2', '1'),
+('5', '12', NULL, NULL, NULL, 'lg v50', '7000000', NULL, '5', '2', '3'),
 ('6', '12', NULL, NULL, NULL, 'lg g7', '3000000', NULL, '5', '2', '1'),
 ('7', '12', NULL, NULL, NULL, 'samsung note 10', '1000000', NULL, '7', '3', '1'),
 ('8', '12', NULL, NULL, NULL, 'samsung s9', '8000000', NULL, '8', '3', '1'),
-('9', '12', NULL, NULL, NULL, 'iphone 11', '1000000', NULL, '1', '1', '1'),
-('10', '12', NULL, NULL, NULL, 'iphone 11', '1000000', NULL, '1', '1', '1'),
+('9', '12', NULL, NULL, NULL, 'iphone 11', '1000000', NULL, '1', '1', '2'),
+('10', '12', NULL, NULL, NULL, 'iphone 11', '1000000', NULL, '1', '1', '3'),
 ('11', '12', NULL, NULL, NULL, 'iphone 11', '1000000', NULL, '1', '1', '1'),
-('12', '12', NULL, NULL, NULL, 'iphone 11', '1000000', NULL, '1', '1', '1'),
-('13', '12', NULL, NULL, NULL, 'iphone 11', '1000000', NULL, '1', '1', '1'),
-('14', '12', NULL, NULL, NULL, 'iphone 11', '1000000', NULL, '1', '1', '1'),
+('12', '12', NULL, NULL, NULL, 'iphone 11', '1000000', NULL, '1', '1', '3'),
+('13', '12', NULL, NULL, NULL, 'iphone 11', '1000000', NULL, '1', '1', '2'),
+('14', '12', NULL, NULL, NULL, 'iphone 11', '1000000', NULL, '1', '1', '3'),
 ('15', '12', NULL, NULL, NULL, 'iphone 8', '8000000', NULL, '2', '1', '1'),
-('16', '12', NULL, NULL, NULL, 'iphone 8', '8800000', NULL, '2', '1', '1');
+('16', '12', NULL, NULL, NULL, 'iphone 8', '8800000', NULL, '2', '1', '2'),
+('17', '12', NULL, NULL, NULL, 'iphone 8', '8800000', NULL, '2', '1', '3'),
+('18', '12', NULL, NULL, NULL, 'iphone 8', '8800000', NULL, '2', '1', '1'),
+('19', '12', NULL, NULL, NULL, 'iphone 8', '8800000', NULL, '2', '1', '2'),
+('120', '12', NULL, NULL, NULL, 'iphone 8', '8800000', NULL, '2', '1', '3');
+
+

@@ -147,10 +147,7 @@ public class ProductServiceImpl implements IProductService {
     				products.add(prd);
     			}
     		}
-		}
-			
-		
-        
+		}      
         List<Product> list;
         if (products.size()<startItem) {
 			list =Collections.emptyList();
@@ -244,6 +241,42 @@ public class ProductServiceImpl implements IProductService {
 		List<Product> ords = productDao.findAll();
 		for (Product prd : ords) {
 			if (prd.getPrice()<=price&&prd.getName()==name) {
+				amout++;
+			}
+		}
+		return amout;
+	}
+	// lấy ra sản phẩm đang sale
+	@Override
+	public Page<Product> findPrdBySale(String sale, Pageable pageable) {
+		int pageSize = pageable.getPageSize();
+        int currentPage = pageable.getPageNumber();
+        int startItem = currentPage * pageSize;
+        List<Product> products = new ArrayList<Product>();
+        List<Product> ords = productDao.findAll();
+        for (Product prd : ords) {
+			if (!prd.getSale().getName().equalsIgnoreCase(sale)) {
+				products.add(prd);
+			}
+		}
+        List<Product> list;
+        if (products.size()<startItem) {
+			list =Collections.emptyList();
+		}else {
+			int toIndex = Math.min(startItem+pageSize, products.size());
+			list = products.subList(startItem, toIndex);
+		}
+        
+        Page<Product> productPage = new PageImpl<Product>(list, PageRequest.of(currentPage, pageSize), products.size());
+		return productPage;
+	}
+	// đếm số sản phẩm đang sale
+	@Override
+	public int getAmoutBySale(String sale) {
+		int amout=0;
+		List<Product> ords = productDao.findAll();
+		for (Product prd : ords) {
+			if (!prd.getSale().getName().equals(sale)) {
 				amout++;
 			}
 		}
