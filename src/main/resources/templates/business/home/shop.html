@@ -158,13 +158,10 @@ xmlns="http://www.w3.org/1999/xhtml"
 
 					<!-- Shop Sidebar -->
 					<div class="shop_sidebar">
-						<div class="sidebar_section">
-							<div class="sidebar_title">
-							<ul class="sidebar_categories">
-								<li><a th:href="@{/home(sale=new)}">Sales</a></li>
-								</ul>
-							</div>
-							<div class="sidebar_title">Price</div>
+						<div class="sidebar_section filter_by_section">
+							<div class="sidebar_title">Filter By</div>
+							
+							<div class="sidebar_subtitle">Price</div>
 							<ul class="sidebar_categories">
 								<li><a th:href="@{/home(price=900000)}">dưới 1 triệu</a></li>
 								<li><a th:href="@{/home(price=5000000)}">dưới 5 triệu</a></li>
@@ -175,14 +172,11 @@ xmlns="http://www.w3.org/1999/xhtml"
 								<li><a th:href="@{/home(price=20000000)}">dưới 20 triệu</a></li>
 								<li><a th:href="@{/home(price=25000000)}">dưới 25 triệu</a></li>
 							</ul>
-						</div>
-						<div class="sidebar_section filter_by_section">
-							<div class="sidebar_title">Filter By</div>
-							<div class="sidebar_subtitle">Price</div>
-							<div class="filter_price">
-								<div id="slider-range" class="slider_range"></div>
-								<p>Range: </p>
-								<p><input type="text" id="amount" class="amount" readonly style="border:0; font-weight:bold;"></p>
+							
+							<div class="sidebar_title">
+							<ul class="sidebar_categories">
+								<li><a th:href="@{/home(sale=new)}">On sale</a></li>
+								</ul>
 							</div>
 						</div>
 						<div class="sidebar_section">
@@ -199,14 +193,14 @@ xmlns="http://www.w3.org/1999/xhtml"
 						<div class="sidebar_section">
 							<div class="sidebar_subtitle brands_subtitle">Brands</div>
 							<ul class="brands_list">
-								<li class="brand"><a href="#">Apple</a></li>
-								<li class="brand"><a href="#">Beoplay</a></li>
-								<li class="brand"><a href="#">Google</a></li>
-								<li class="brand"><a href="#">Meizu</a></li>
-								<li class="brand"><a href="#">OnePlus</a></li>
-								<li class="brand"><a href="#">Samsung</a></li>
-								<li class="brand"><a href="#">Sony</a></li>
-								<li class="brand"><a href="#">Xiaomi</a></li>
+								<li class="brand"><a th:href="@{/home(typeName=iphone)}">Iphone</a></li>
+									<li class="brand"><a th:href="@{/home(typeName=lg)}">Lg </a></li>
+									<li class="brand"><a th:href="@{/home(typeName=samsung)}">Samsung </a></li>
+									<li class="brand"><a th:href="@{/home(typeName=xiaomi)}">Xiaomi </a></li>
+									<li class="brand"><a th:href="@{/home(typeName=nokia)}">Nokia </a></li>
+									<li class="brand"><a th:href="@{/home(typeName=google)}">Google </a></li>
+									<li class="brand"><a th:href="@{/home(typeName=huawei)}">Huawei </a></li>
+									<li class="brand"><a th:href="@{/home(typeName=oppo)}">Oppo</a></li>
 							</ul>
 						</div>
 					</div>
@@ -216,19 +210,7 @@ xmlns="http://www.w3.org/1999/xhtml"
 					<div class="shop_content">
 						<div class="shop_bar clearfix">
 							<div class="shop_product_count"><span th:text="${amout}"></span> products found</div>
-<!-- 							<div class="shop_sorting"> -->
-<!-- 								<span>Sort by:</span> -->
-<!-- 								<ul> -->
-<!-- 									<li> -->
-<!-- 										<span class="sorting_text">highest rated<i class="fas fa-chevron-down"></span></i> -->
-<!-- 										<ul> -->
-<!-- 											<li class="shop_sorting_button" data-isotope-option='{ "sortBy": "original-order" }'>highest rated</li> -->
-<!-- 											<li class="shop_sorting_button" data-isotope-option='{ "sortBy": "name" }'>name</li> -->
-<!-- 											<li class="shop_sorting_button"data-isotope-option='{ "sortBy": "price" }'>price</li> -->
-<!-- 										</ul> -->
-<!-- 									</li> -->
-<!-- 								</ul> -->
-<!-- 							</div> -->
+
 						</div>
 
 						<div class="product_grid">
