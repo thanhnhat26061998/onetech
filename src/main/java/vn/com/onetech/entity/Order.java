@@ -39,17 +39,12 @@ public class Order implements Serializable{
     private String status;
     private String payments;
     private String notes;
-    private String totals;
+    private double totals;
     @ManyToOne
     @JoinColumn(name="userId")
     private User users;
-    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(
-    		name="oder_detail",
-    		joinColumns = @JoinColumn(name="orderId"),
-    		inverseJoinColumns = @JoinColumn(name="productId")
-    )
-    private Set<Product> products;
+    @OneToMany(mappedBy = "order")
+    private List<OderDetail> orderDetail;
 
   
     

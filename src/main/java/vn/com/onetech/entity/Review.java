@@ -1,8 +1,11 @@
 package vn.com.onetech.entity;
 
 
+import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,7 +26,16 @@ public class Review {
     private int id;
 	private String content;
 	private int star;
-	@ManyToOne
+	private Date date;
+	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="productId")
     private Product product;
+	@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="userId")
+    private User user;
+	
+	
+
+	
+	
 }

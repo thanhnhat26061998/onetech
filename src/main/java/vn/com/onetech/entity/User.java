@@ -39,9 +39,10 @@ import lombok.Data;
 public class User implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "userid")
     private int id;
     private String name;
+    private String img;
     @Column(name = "email", nullable = false, unique = true)
     private String email;
     @DateTimeFormat(pattern = "yyyy-MM-dd")

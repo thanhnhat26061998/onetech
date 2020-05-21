@@ -29,30 +29,22 @@ import lombok.Data;
 @Table(name="product")
 public class Product implements Serializable{
     @Id
+    @Column(name = "productId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    private String image;
-    private String described;
-    private String color;
-    private String amount;
-    private int price;
+    private String notes;
     @OneToMany(mappedBy = "product")
     private List<Review> review;
-    @ManyToOne
-    @JoinColumn(name="productTypesId")
-    private ProductType productType;
-    @ManyToOne
-    @JoinColumn(name="salesId")
-    private Sale sale;
+    @OneToMany(mappedBy = "product")
+    private List<ProductDetail> productDetail;  
     @OneToOne
-    @JoinColumn(name="configurationId")
-    private Configurations configuration;
-    @OneToOne
-    @JoinColumn(name="imageId")
-    private Images images;
-    @ManyToMany(mappedBy = "products")
-    private Set<Order> orders;
+    @JoinColumn(name="promotionId")
+    private Promotion promotion;
+    @ManyToOne
+    @JoinColumn(name="trademarkId")
+    private Trademark trademark;
+
     
     
 
