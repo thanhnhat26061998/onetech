@@ -43,7 +43,7 @@ INSERT INTO `product` (`product_id`, `name`, `notes`, `promotion_id`, `trademark
  
  
   INSERT INTO `product_detail` (`product_detail_id`, `amount`, `price`, `color_id`, `configurator_id`, `image_id`, `product_id`) VALUES 
-('1', '12', '22000000', '1', '1', '1', '1'),
+('1', '12', '22000000', '2', '3', '1', '1'),
 ('2', '12', '12000000', '2', '1', '3', '2'),
 ('3', '15', '13000000', '3', '1', '1', '3'),
 ('4', '17', '25000000', '3', '2', '5', '4'),

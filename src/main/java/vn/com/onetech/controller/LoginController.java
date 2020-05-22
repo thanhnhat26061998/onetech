@@ -5,6 +5,8 @@ import java.util.HashSet;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -32,7 +34,11 @@ public class LoginController {
 	@Autowired
 	private IRoleDao roleDao;
 	
-	@Autowired RegisterValidation registerValidation;
+	@Autowired 
+	RegisterValidation registerValidation;
+	
+	@Autowired
+	JavaMailSender emailSender;
 	
 	@RequestMapping("/login")
 	public String login() {
@@ -73,7 +79,10 @@ public class LoginController {
 		user.setRoles(roles);
 		userDao.save(user);
 		
-		
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setTo(register.getEmail());
+		message.setText("http://localhost:8888/login");
+		this.emailSender.send(message);
 			
 		return "redirect:/login";
 	}

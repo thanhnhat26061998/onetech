@@ -1,5 +1,6 @@
 package vn.com.onetech.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import vn.com.onetech.dao.IProductDao;
 import vn.com.onetech.dao.IReviewDao;
+import vn.com.onetech.dto.ColorDto;
 import vn.com.onetech.dto.ProductDto;
 import vn.com.onetech.dto.ReviewDto;
 import vn.com.onetech.entity.Product;
@@ -55,6 +57,16 @@ public class ProductDetailController {
 		
 		List<ProductDto> listProductDto = productDetailService.findListProductById(productDto.getProductId());
 		model.addAttribute("listProductDto", listProductDto);
+		List<ColorDto> color = new ArrayList<ColorDto>();
+		for (ProductDto productDto2 : listProductDto) {
+			if (productDto2.getRom().equals(productDto.getRom())) {
+				ColorDto cl = new ColorDto();
+				cl.setId(productDto2.getProductDetailId());
+				cl.setColor(productDto2.getColor());
+				color.add(cl);
+				model.addAttribute("color", color);
+			}
+		}
 		ProductDetail prDt = productDetailService.findById(id);
 		model.addAttribute("prDt", prDt);
 		return "business/product/productDetail";

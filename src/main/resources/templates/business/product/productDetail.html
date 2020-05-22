@@ -297,8 +297,8 @@ xmlns="http://www.w3.org/1999/xhtml"
 						<div class="flex items-center" >
 							<label class="_2iNrDS div">màu sắc</label>
 						<div style="block; margin-left: 108px; margin-top: -30px;">
-							<div style="display:inline;, margin-left: 100px;" th:each="listProductDto : ${listProductDto}">
-								<a class="product-variation" th:href="@{/productdetail(id=${listProductDto.productDetailId})}">
+							<div style="display:inline;, margin-left: 100px;" th:each="listProductDto : ${color}">
+								<a class="product-variation" th:href="@{/productdetail(id=${listProductDto.id})}">
 									<span class="iconmobile-opt" th:text="${listProductDto.color}"></span>
 								</a>
 											

@@ -141,6 +141,7 @@ public class ProductDetailServiceImpl implements IProductDetailService {
 				productDto.setProductName(prdDetail.getProduct().getName());
 				productDto.setBrandName(prdDetail.getProduct().getTrademark().getName());
 				productDto.setRom(prdDetail.getConfigurator().getRom());
+				
 				productDto.setPriceBefore(prdDetail.getPrice());
 				productDto.setPriceAfter(price);
 				productDto.setReducedPrice(prdDetail.getPrice()-price);

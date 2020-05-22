@@ -40,7 +40,8 @@ public class RegisterValidation implements Validator {
 		}if (!user.getPassword().equals(user.getCfpassword())) {
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "passwords", "password incorrect", "password incorrect");
 		}else {
-			errors.rejectValue("email", "Null","Null");
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "cfpassword", "NotEmpty", "NotEmpty");
+			
 		}
 		
 	}
