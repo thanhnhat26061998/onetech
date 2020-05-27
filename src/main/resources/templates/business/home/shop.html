@@ -3,7 +3,7 @@
 xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Shop</title>
+<title>Onetech</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="OneTech shop project">
@@ -215,12 +215,12 @@ xmlns="http://www.w3.org/1999/xhtml"
 								      </div>
 								      	
 								      <div class="price">
-								      	<strong th:text="${product.priceAfter}"></strong><strong>đ</strong>
-								      	<span th:text="${product.priceBefore}"></span><span>đ</span>
+								      	<strong th:text="${#numbers.formatDecimal(product.priceAfter, 0, 'COMMA', 0, 'POINT')}"></strong><strong>đ</strong>
+								      	<span th:text="${#numbers.formatDecimal(product.priceBefore, 0, 'COMMA', 0, 'POINT')}"></span><span>đ</span>
 								      </div>
 								      <div class="discount"> 
 								      <label>giảm</label>
-								      <label  th:text="${product.reducedPrice}"></label>
+								      <label  th:text="${#numbers.formatDecimal(product.reducedPrice, 0, 'COMMA', 0, 'POINT')}"></label>
 								      <label>đ</label>
 								      </div>
 								      <div class="card-footer">

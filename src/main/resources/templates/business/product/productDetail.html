@@ -267,8 +267,8 @@ xmlns="http://www.w3.org/1999/xhtml"
 				<div class="col-lg-5 offset-lg-3">
 					<div class="">
 						<div class="area_price">
-							<strong th:text="${productDto.priceAfter}"></strong>
-							<span class="hisprice" th:text="${productDto.priceBefore}"></span>
+							<strong th:text="${#numbers.formatDecimal(productDto.priceAfter, 0, 'COMMA', 0, 'POINT')}"></strong>
+							<span class="hisprice" th:text="${#numbers.formatDecimal(productDto.priceBefore, 0, 'COMMA', 0, 'POINT')}"></span>
 							<label class="installment">trả góp 0%</label>
 						</div>
 						<div class="memory memory3 ">
@@ -284,8 +284,12 @@ xmlns="http://www.w3.org/1999/xhtml"
 								<span class="iconmobile-opt" th:text="${listProductDto.rom}">
 									<i></i>
 								</span>
-								<strong th:text="${listProductDto.priceAfter}"></strong>
+						
+								<strong th:text="${#numbers.formatDecimal(listProductDto.priceAfter, 0, 'COMMA', 0, 'POINT')}"></strong>
+								
+								
 							</a>
+							
 						</th:block>
 						</div>
 						

@@ -2,6 +2,7 @@ package vn.com.onetech.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,7 +33,7 @@ public class ProductDetail {
     @OneToOne
     @JoinColumn(name="imageId")
     private Images images;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="productId")
     private Product product;
 	

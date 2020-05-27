@@ -80,7 +80,7 @@ public class ProductDetailController {
 			@RequestParam("content") String  content) {
 		
 		if (session.getAttribute("user")==null) {
-			return "/login";
+			return "redirect:/login";
 		}else {
 			Product prd = productService.findById(prdId);
 			User user = (User) session.getAttribute("user");
