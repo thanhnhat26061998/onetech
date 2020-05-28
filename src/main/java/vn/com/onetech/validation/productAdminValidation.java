@@ -1,6 +1,6 @@
 package vn.com.onetech.validation;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +14,7 @@ import vn.com.onetech.dao.IConfigDao;
 import vn.com.onetech.dto.ProductDetailAdminDto;
 import vn.com.onetech.entity.Product;
 import vn.com.onetech.entity.ProductDetail;
+import vn.com.onetech.entity.User;
 import vn.com.onetech.service.IProductService;
 
 
@@ -33,7 +34,7 @@ public class productAdminValidation implements Validator {
 	@Override
 	public boolean supports(Class<?> aClass) {
 
-		return ProductDetailAdminDto.class.equals(aClass);
+		return User.class.equals(aClass);
 	}
 
 	@Override
@@ -44,7 +45,7 @@ public class productAdminValidation implements Validator {
 		for (ProductDetail productDetail : prdDt) {
 			if (productDetail.getColor().getId() == prd.getColorId() &&
 					productDetail.getConfigurator().getId()== prd.getConfigId()) {
-				ValidationUtils.rejectIfEmptyOrWhitespace(errors, "colorVsConfig", "Sản phẩm đã tồn tại", "Sản phẩm đã tồn tại");
+				ValidationUtils.rejectIfEmptyOrWhitespace(errors, "colorVsConfig", "Email already exists", "Email already exists");
 			}
 		}
 		if (prd.getPrice() != 0 && prd.getAmount()!=0) {

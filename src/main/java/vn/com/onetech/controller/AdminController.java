@@ -4,6 +4,9 @@ import java.awt.Image;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
 
 import vn.com.onetech.dao.IColorDao;
 import vn.com.onetech.dao.IConfigDao;
@@ -104,14 +108,11 @@ public class AdminController {
 	public String addProductDetail( HttpSession session, Model model, @RequestParam("id") int id) {
 		
 		User user = (User) session.getAttribute("user");
-		model.addAttribute("user", user);
-		
+		model.addAttribute("user", user);		
 		List<Configurator> config = configDao.findAll();
-		model.addAttribute("config", config);
-		
+		model.addAttribute("config", config);		
 		List<Color> color = colorDao.findAll();
-		model.addAttribute("color", color);
-		
+		model.addAttribute("color", color);		
 		ProductDetailAdminDto prdDT = new ProductDetailAdminDto();
 		prdDT.setProductId(id);
 		model.addAttribute("prdDT", prdDT);
@@ -121,28 +122,26 @@ public class AdminController {
 	@PostMapping("admin/save")
 	public String savePrd(Model model, 
 		@ModelAttribute("prdDT") ProductDetailAdminDto prdDto,BindingResult bindingResult
-		, HttpSession session, @RequestParam("file") MultipartFile[] files, HttpServletRequest request) {
-
-		
-		
+		, HttpSession session, @RequestParam("file") MultipartFile file,
+		@RequestParam("file2") MultipartFile file2) {		
 		prdValidation.validate(prdDto, bindingResult);
 		if (bindingResult.hasErrors()) {
 			User user = (User) session.getAttribute("user");
-			model.addAttribute("user", user);
-			
+			model.addAttribute("user", user);			
 			List<Configurator> config = configDao.findAll();
-			model.addAttribute("config", config);
-			
+			model.addAttribute("config", config);			
 			List<Color> color = colorDao.findAll();
-			model.addAttribute("color", color);
-			
+			model.addAttribute("color", color);			
 			ProductDetailAdminDto prdDT = new ProductDetailAdminDto();
 			prdDT.setProductId(prdDto.getProductId());
 			model.addAttribute("prdDT", prdDT);
 			return "system/products/productDetail/addPrd";
 		}
-		Images img = new Images();
-		img = imageDao.save(imageService.uploadImage(files, request));
+		Images img = new Images();       
+        img.setImage1(imageService.uploadImage(file));
+        img.setImage2(imageService.uploadImage(file2));
+		
+		imageDao.save(img);
 		ProductDetail prdDt = new ProductDetail();
 		prdDt.setAmount(prdDto.getAmount());
 		prdDt.setPrice(prdDto.getPrice());

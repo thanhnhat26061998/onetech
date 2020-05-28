@@ -9,5 +9,5 @@ import org.springframework.web.multipart.MultipartFile;
 import vn.com.onetech.entity.Images;
 
 public interface ImageService {
-	Images uploadImage(MultipartFile[] files, HttpServletRequest request);
+	String uploadImage(MultipartFile file);
 }

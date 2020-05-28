@@ -22,25 +22,16 @@
 <link href="assets\css\icons.min.css" rel="stylesheet" type="text/css">
 <link href="assets\css\app.min.css" rel="stylesheet" type="text/css"
 	id="app-stylesheet">
-
 </head>
-
 <body>
 
 	<!-- Begin page -->
 	<div id="wrapper">
-
-
 		<!-- Topbar Start -->
 		<div class="navbar-custom"
 			th:replace="~{system/fragment/index ::header}"></div>
-
-
-
 		<div class="left-side-menu"
 			th:replace="~{system/fragment/index ::menu}"></div>
-
-
 		<div class="content-page">
 			<div class="content">
 
@@ -69,10 +60,12 @@
 
 											<form action="#" th:action="@{/admin/save}"
 												th:object="${prdDT}" method="post" enctype="multipart/form-data" >
-												<span th:if="${#fields.hasErrors('colorVsConfig')}"
-													th:errors="*{colorVsConfig}"></span> <input
+												<span th:if="${#fields.hasErrors('colorVsConfig')}" th:errors="*{colorVsConfig}"></span>
+													
+													<input
 													style="margin: 0 auto;" type="text" hidden=""
 													th:field="*{productId}">
+
 												<div class="form-row">
 													<div class="form-group col-md-12">
 														<label for="inputEmail4" class="col-form-label">Amount</label>
@@ -95,7 +88,6 @@
 															th:errors="*{price}"></span>
 													</div>
 												</div>
-
 												<div class="form-row">
 
 													<div class="form-group col-md-12">
@@ -107,42 +99,28 @@
 																<option th:value="${config.id}" th:text="${config.rom}"></option>
 															</th:block>
 														</select>
-
 													</div>
-
-
 												</div>
 												<div class="form-row">
-
 													<div class="form-group col-md-12">
 														<label for="inputState" class="col-form-label">Color</label>
-
 														<select id="inputState" class="form-control"
 															th:field="*{colorId}">
 															<th:block th:each="color : ${color}">
 																<option th:value="${color.id}" th:text="${color.name}"></option>
 															</th:block>
 														</select>
-
 													</div>
-
-
 												</div>
 												<div class="form-row">
-
-
-													<div class="form-group col-md-12">
-													
+													<div class="form-group col-md-12">													
 												<label for="inputState" class="col-form-label">Image</label>
 														<input type="file" class="form-control"
-															id="example-fileinput" name="file" multiple="multiple">
-															<input type="file" class="form-control"
-															id="example-fileinput" name="file" multiple="multiple">
+															id="example-fileinput" name="file">
+														<input type="file" class="form-control"
+															id="example-fileinput" name="file2">
 													</div>
 												</div>
-
-
-
 												<button type="submit" class="btn btn-primary">Submit</button>
 											</form>
 										</div>

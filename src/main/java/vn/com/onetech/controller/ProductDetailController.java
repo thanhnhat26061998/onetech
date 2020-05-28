@@ -1,7 +1,17 @@
 package vn.com.onetech.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 
@@ -11,9 +21,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+
+
 import vn.com.onetech.dao.IProductDao;
 import vn.com.onetech.dao.IReviewDao;
 import vn.com.onetech.dto.ColorDto;
+import vn.com.onetech.dto.ConfigDto;
 import vn.com.onetech.dto.ProductDto;
 import vn.com.onetech.dto.ReviewDto;
 import vn.com.onetech.entity.Product;
@@ -39,24 +52,34 @@ public class ProductDetailController {
 	@Autowired
 	private IReviewDao reviewDao;
 	
+	public static <T> Predicate<T> distinctByKey(Function<? super T, Object> keyExtractor) {
+        Map<Object, Boolean> seen = new ConcurrentHashMap<> ();
+        return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
+    }
 	
+	@SuppressWarnings("unlikely-arg-type")
 	@RequestMapping("/productdetail")
 	public String productDetail(Model model, @RequestParam("id") int id, HttpSession session) {
 		
 		if (session.getAttribute("user")!=null) {
 			User user = (User) session.getAttribute("user");
 			model.addAttribute("user", user);
-		}
-		
+		}		
 		ProductDto productDto = productDetailService.findProductDtoById(id);
-		model.addAttribute("productDto", productDto);
-		
-		
+		model.addAttribute("productDto", productDto);	
 		List<ReviewDto> review = reviewDto.findAllReviewDto(productDto.getProductId());
 		model.addAttribute("review", review);
 		
 		List<ProductDto> listProductDto = productDetailService.findListProductById(productDto.getProductId());
 		model.addAttribute("listProductDto", listProductDto);
+		
+		List<ProductDto> pr=(listProductDto).stream ().filter ( distinctByKey ( p -> p.getRom() ) )
+                .collect ( Collectors.toList () );
+		
+		model.addAttribute("pr", pr);
+
+
+		
 		List<ColorDto> color = new ArrayList<ColorDto>();
 		for (ProductDto productDto2 : listProductDto) {
 			if (productDto2.getRom().equals(productDto.getRom())) {

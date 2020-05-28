@@ -279,7 +279,7 @@ xmlns="http://www.w3.org/1999/xhtml"
 							<p th:text="${productDto.color}"></p>
 							
 						</div>
-						<th:block th:each="listProductDto : ${listProductDto}">  
+						<th:block th:each="listProductDto : ${pr}">  
 						<a aria-selected="false" class="item i1 active " th:href="@{/productdetail(id=${listProductDto.productDetailId})}">
 								<span class="iconmobile-opt" th:text="${listProductDto.rom}">
 									<i></i>
