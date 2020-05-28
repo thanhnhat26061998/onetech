@@ -58,71 +58,59 @@
 										<div class="card-body">
 											<h4 class="header-title mb-4">Form row</h4>
 
-											<form action="#" th:action="@{/admin/save}"
-												th:object="${prdDT}" method="post" enctype="multipart/form-data" >
-												<span th:if="${#fields.hasErrors('colorVsConfig')}" th:errors="*{colorVsConfig}"></span>
-													
-													<input
-													style="margin: 0 auto;" type="text" hidden=""
-													th:field="*{productId}">
-													<input
+											<form action="#" th:action="@{/admin/saveprd}"
+												th:object="${prdto}" method="post">
+
+
+												<input
 													style="margin: 0 auto;" type="text" hidden=""
 													th:field="*{id}">
 
+
 												<div class="form-row">
 													<div class="form-group col-md-12">
-														<label for="inputEmail4" class="col-form-label">Amount</label>
+														<label for="inputEmail4" class="col-form-label">Name</label>
 														<input style="margin: 0 auto;" type="text"
 															class="form-control" id="inputEmail4"
-															placeholder="Amount" th:field="*{amount}"> <span
-															th:if="${#fields.hasErrors('amount')}"
-															th:errors="*{amount}"></span>
+															placeholder="name" th:field="*{name}"> <span
+															th:if="${#fields.hasErrors('name')}"
+															th:errors="*{name}"></span>
 													</div>
 
 												</div>
+											
 												<div class="form-row">
 
 													<div class="form-group col-md-12">
-														<label for="inputPassword4" class="col-form-label">Price</label>
-														<input type="text" class="form-control"
-															id="inputPassword4" placeholder="Price"
-															th:field="*{price}"> <span
-															th:if="${#fields.hasErrors('price')}"
-															th:errors="*{price}"></span>
-													</div>
-												</div>
-												<div class="form-row">
-
-													<div class="form-group col-md-12">
-														<label for="inputState" class="col-form-label">Config</label>
+														<label for="inputState" class="col-form-label">Promotion</label>
 
 														<select id="inputState" class="form-control"
-															th:field="*{configId}">
-															<th:block th:each="config : ${config}">
-																<option th:value="${config.id}" th:text="${config.rom}"></option>
+															th:field="*{promotionId}">
+															<th:block th:each="pr: ${pr}">
+																<option th:value="${pr.id}" th:text="${pr.name}"></option>
 															</th:block>
 														</select>
 													</div>
 												</div>
 												<div class="form-row">
 													<div class="form-group col-md-12">
-														<label for="inputState" class="col-form-label">Color</label>
+														<label for="inputState" class="col-form-label">Trademark</label>
 														<select id="inputState" class="form-control"
-															th:field="*{colorId}">
-															<th:block th:each="color : ${color}">
-																<option th:value="${color.id}" th:text="${color.name}"></option>
+															th:field="*{trademarkId}">
+															<th:block th:each="td : ${td}">
+																<option th:value="${td.id}" th:text="${td.name}"></option>
 															</th:block>
 														</select>
 													</div>
 												</div>
 												<div class="form-row">
-													<div class="form-group col-md-12">													
-												<label for="inputState" class="col-form-label">Image</label>
-														<input type="file" class="form-control"
-															id="example-fileinput" name="file">
-														<input type="file" class="form-control"
-															id="example-fileinput" name="file2">
+													<div class="form-group col-md-12">
+														<label for="inputEmail4" class="col-form-label">Note</label>
+														<input style="margin: 0 auto;" type="text"
+															class="form-control" id="inputEmail4"
+															placeholder="Notes" th:field="*{note}">
 													</div>
+
 												</div>
 												<button type="submit" class="btn btn-primary">Submit</button>
 											</form>

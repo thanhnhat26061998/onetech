@@ -8,4 +8,7 @@ public class ProductAdminDto {
 	private String name;
 	private String promotion;
 	private String trademark;
+	private int promotionId;
+	private int trademarkId;
+	private String note;
 }

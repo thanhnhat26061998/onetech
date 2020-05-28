@@ -79,7 +79,7 @@
 						<div class="col-sm-12">
 							<div class="card-box">
 								<div style="padding: 0px 0px 20px 0px;">
-								<a href="/admin/product/add"><button class="btn btn-success waves-effect width-md waves-light">Add Product</button>
+								<a href="/admin/addproduct"><button class="btn btn-success waves-effect width-md waves-light">Add Product</button>
 								</a>
 								<a href="/admin/product/addpromotion"><button class="btn btn-success waves-effect width-md waves-light">Add Promotion</button>
 								</a>
@@ -108,9 +108,9 @@
 												<td th:text="${product.trademark}"></td>
 												
 												<td style="text-align:center; width: 240px;">
-													<a th:href="@{productdetail(id=${product.id})}"><button type="button" class="btn btn-secondary waves-effect"> 
+													<a th:href="@{/admin/productdetail(id=${product.id})}"><button type="button" class="btn btn-secondary waves-effect"> 
 													 <span>View detail</span> </button></a>
-													<a th:href="@{productdetail(id=${product.id})}"><button type="button" class="btn btn-icon waves-effect waves-light btn-warning"> 
+													<a th:href="@{/admin/editproduct(id=${product.id})}"><button type="button" class="btn btn-icon waves-effect waves-light btn-warning"> 
 													<i class="fa fa-wrench"></i> </button></a>
 													<a th:href="@{/admin/delete(id=${product.id})}"><button type="button" class="btn btn-icon waves-effect waves-light btn-danger"> 
 													<i class="fa fa-trash"></i> </button></a>

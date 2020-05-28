@@ -13,14 +13,14 @@
 <link rel="shortcut icon" href="assets\images\favicon.ico">
 
 <!-- Responsive Table css -->
-<link href="assets\libs\rwd-table\rwd-table.min.css" rel="stylesheet"
+<link href="/admin/assets\libs\rwd-table\rwd-table.min.css" rel="stylesheet"
 	type="text/css">
 
 <!-- App css -->
-<link href="assets\css\bootstrap.min.css" rel="stylesheet"
+<link href="/admin/assets\css\bootstrap.min.css" rel="stylesheet"
 	type="text/css" id="bootstrap-stylesheet">
-<link href="assets\css\icons.min.css" rel="stylesheet" type="text/css">
-<link href="assets\css\app.min.css" rel="stylesheet" type="text/css"
+<link href="/admin/assets\css\icons.min.css" rel="stylesheet" type="text/css">
+<link href="/admin/assets\css\app.min.css" rel="stylesheet" type="text/css"
 	id="app-stylesheet">
 </head>
 <body>
@@ -58,72 +58,35 @@
 										<div class="card-body">
 											<h4 class="header-title mb-4">Form row</h4>
 
-											<form action="#" th:action="@{/admin/save}"
-												th:object="${prdDT}" method="post" enctype="multipart/form-data" >
-												<span th:if="${#fields.hasErrors('colorVsConfig')}" th:errors="*{colorVsConfig}"></span>
-													
-													<input
-													style="margin: 0 auto;" type="text" hidden=""
-													th:field="*{productId}">
-													<input
+											<form action="#" th:action="@{/admin/savepromotion}"
+												th:object="${promotion}" method="post">
+
+
+												<input
 													style="margin: 0 auto;" type="text" hidden=""
 													th:field="*{id}">
 
+
 												<div class="form-row">
 													<div class="form-group col-md-12">
-														<label for="inputEmail4" class="col-form-label">Amount</label>
+														<label for="inputEmail4" class="col-form-label">Discount value</label>
 														<input style="margin: 0 auto;" type="text"
-															class="form-control" id="inputEmail4"
-															placeholder="Amount" th:field="*{amount}"> <span
-															th:if="${#fields.hasErrors('amount')}"
-															th:errors="*{amount}"></span>
-													</div>
+															class="form-control" 
+															placeholder="Discount value" th:field="*{discountvalue}"> 
 
 												</div>
-												<div class="form-row">
-
-													<div class="form-group col-md-12">
-														<label for="inputPassword4" class="col-form-label">Price</label>
-														<input type="text" class="form-control"
-															id="inputPassword4" placeholder="Price"
-															th:field="*{price}"> <span
-															th:if="${#fields.hasErrors('price')}"
-															th:errors="*{price}"></span>
-													</div>
-												</div>
-												<div class="form-row">
-
-													<div class="form-group col-md-12">
-														<label for="inputState" class="col-form-label">Config</label>
-
-														<select id="inputState" class="form-control"
-															th:field="*{configId}">
-															<th:block th:each="config : ${config}">
-																<option th:value="${config.id}" th:text="${config.rom}"></option>
-															</th:block>
-														</select>
-													</div>
 												</div>
 												<div class="form-row">
 													<div class="form-group col-md-12">
-														<label for="inputState" class="col-form-label">Color</label>
-														<select id="inputState" class="form-control"
-															th:field="*{colorId}">
-															<th:block th:each="color : ${color}">
-																<option th:value="${color.id}" th:text="${color.name}"></option>
-															</th:block>
-														</select>
-													</div>
+														<label for="inputEmail4" class="col-form-label">Name</label>
+														<input style="margin: 0 auto;" type="text"
+															class="form-control" 
+															placeholder="Name" th:field="*{name}"> 
+
 												</div>
-												<div class="form-row">
-													<div class="form-group col-md-12">													
-												<label for="inputState" class="col-form-label">Image</label>
-														<input type="file" class="form-control"
-															id="example-fileinput" name="file">
-														<input type="file" class="form-control"
-															id="example-fileinput" name="file2">
-													</div>
 												</div>
+											
+												
 												<button type="submit" class="btn btn-primary">Submit</button>
 											</form>
 										</div>

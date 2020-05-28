@@ -91,10 +91,14 @@
 													th:src="${product.images.image2}" alt=""> <img
 													th:src="${product.images.image3}" alt=""></td>
 												<td>
+												<a th:href="@{/admin/editdt(id=${product.id})}">
 													<button type="button"
 														class="btn btn-icon waves-effect waves-light btn-warning">
 														<i class="fa fa-wrench"></i>
-													</button> <a th:href="@{/admin/deletedt(id=${product.id})}"><button
+													</button> 
+												</a>
+													
+													<a th:href="@{/admin/deletedt(id=${product.id})}"><button
 															type="button"
 															class="btn btn-icon waves-effect waves-light btn-danger">
 															<i class="fa fa-trash"></i>
