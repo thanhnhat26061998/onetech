@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -89,20 +91,25 @@ public class AdminController {
 
 	@RequestMapping("/admin")
 	public String admin(HttpSession sesion, Model model) {
-		User user = (User) sesion.getAttribute("user");
-		model.addAttribute("user", user);
-		return "system/index/index";
+		
+		return "redirect:/admin/product";
 	}
 
 	// list product
 	@RequestMapping("/admin/product")
-	public String product(HttpSession session, Model model) {
+	public String product(HttpSession session, Model model, HttpServletRequest request) {
+		
+		int page = 0; 
+        int size = 3; 
+        if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
+            page = Integer.parseInt(request.getParameter("page")) - 1;
+        }
+        if (request.getParameter("size") != null && !request.getParameter("size").isEmpty()) {
+            size = Integer.parseInt(request.getParameter("size"));
+        }
 		User user = (User) session.getAttribute("user");
 		model.addAttribute("user", user);
-		
-		
-		
-		List<ProductAdminDto> prd = productService.findAllProductDto();
+		Page<Product> prd = productDao.findAll(PageRequest.of(page, size));
 		model.addAttribute("product", prd);
 		return "system/products/product/product";
 	}
