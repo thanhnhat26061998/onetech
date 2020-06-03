@@ -12,4 +12,6 @@ public interface IProductService {
     void remove(Product product);
     
     List<ProductAdminDto> findAllProductDto(); 
+    
+
 }

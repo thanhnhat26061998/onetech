@@ -16,7 +16,7 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "orderDetail")
+@Table(name = "orderDetails")
 public class OderDetail {
 	@Id
     @Column(name = "orderDetailId")
@@ -30,7 +30,6 @@ public class OderDetail {
 	@ManyToOne
     @JoinColumn(name="productId")
     private Product product;
-	@ManyToOne
-    @JoinColumn(name="orderId")
-    private Order order;
+	@OneToMany(mappedBy = "orderDetail")
+    private List<Order> order;
 }

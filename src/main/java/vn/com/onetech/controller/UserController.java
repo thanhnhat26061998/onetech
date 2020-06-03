@@ -132,6 +132,10 @@ public class UserController {
 			
 		return "redirect:/home";
 	}
+	@RequestMapping("/403")
+	public String erros() {
+		return "/403";
+	}
 	
 	
 }

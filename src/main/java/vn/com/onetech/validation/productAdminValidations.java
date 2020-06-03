@@ -22,7 +22,7 @@ import vn.com.onetech.service.IProductService;
 
 
 @Component
-public class productAdminValidation implements Validator {
+public class productAdminValidations implements Validator {
 	
 	
 	@Autowired
@@ -55,13 +55,7 @@ public class productAdminValidation implements Validator {
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "prices", "erros", "chỉ được nhập số");
 		}
 		
-		for (ProductDetail productDetail : prdDt) {
-			if (productDetail.getColor().getId() == prd.getColorId() &&
-					productDetail.getConfigurator().getId()== prd.getConfigId()) {
-				ValidationUtils.rejectIfEmptyOrWhitespace(errors, "colorVsConfig", "erros", "Sản phẩm đã tồn tại");
-			
-			}
-		}
+
 		if (prd.getPrice() != null && prd.getAmount()!=null) {
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "price", "NotEmpty", "NotEmpty");
             ValidationUtils.rejectIfEmptyOrWhitespace(errors, "amount", "NotEmpty", "NotEmpty");

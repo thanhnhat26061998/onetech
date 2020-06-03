@@ -1,0 +1,239 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8">
+<title>onetech</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta content="Responsive bootstrap 4 admin template" name="description">
+<meta content="Coderthemes" name="author">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- App favicon -->
+<link rel="shortcut icon" href="assets\images\favicon.ico">
+
+<!-- Responsive Table css -->
+<link href="/admin/assets\libs\rwd-table\rwd-table.min.css" rel="stylesheet"
+	type="text/css">
+
+<!-- App css -->
+<link href="/admin/assets\css\bootstrap.min.css" rel="stylesheet"
+	type="text/css" id="bootstrap-stylesheet">
+<link href="/admin/assets\css\icons.min.css" rel="stylesheet" type="text/css">
+<link href="/admin/assets\css\app.min.css" rel="stylesheet" type="text/css"
+	id="app-stylesheet">
+
+</head>
+
+<body>
+
+	<!-- Begin page -->
+	<div id="wrapper">
+
+
+		<!-- Topbar Start -->
+		<div class="navbar-custom"
+			th:replace="~{system/fragment/index ::header}"></div>
+		<!-- end Topbar -->
+		<!-- ========== Left Sidebar Start ========== -->
+
+
+		<div class="left-side-menu"
+			th:replace="~{system/fragment/index ::menu}">
+
+
+			<!-- Sidebar -left -->
+
+		</div>
+		<!-- Left Sidebar End -->
+
+		<!-- ============================================================== -->
+		<!-- Start Page Content here -->
+		<!-- ============================================================== -->
+
+		<div class="content-page">
+			<div class="content">
+
+				<!-- Start Content-->
+				<div class="container-fluid">
+
+					<!-- start page title -->
+					<div class="row">
+						<div class="col-12">
+							<div class="page-title-box">
+								<h4 class="page-title">List order</h4>
+								<div class="page-title-right">
+									<ol class="breadcrumb p-0 m-0">
+										<li class="breadcrumb-item"><a href="#">Onetech</a></li>
+										<li class="breadcrumb-item active">ListProuct</li>
+									</ol>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+					</div>
+					<!-- end page title -->
+
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="card-box">
+							 <p style="color: red" id="show_message"></p>
+  <p style="color: red" >TTTT</p>
+							
+								<div style="padding: 10px 10px 30px 10px;">
+								<div style=""><h4>filter:</h2></div>
+								<form th:action="@{/admin/searchs}" method="post">
+										
+										<p style="display: inline;">Status:</p>
+									<select id="inputState" class="form-control" name="status"
+									style="width: 125px; display: inline;">
+
+											<option id="target">confirmed</option>
+											<option>shipping</option>
+											<option>delivered</option>
+									</select>
+									<p style="display: inline;">Begin:</p>
+									<input type="date" class="form-control" name="begin" pattern="yyyy-MM-dd"
+									style="display: inline; width: 200px;">
+									<p style="display: inline;">End:</p>
+									<input type="date" class="form-control" name="end"
+									style="display: inline; width: 200px;"
+									pattern="yyyy-MM-dd">	
+									
+									
+									<button type="submit" class="btn btn-primary" style="margin-bottom: 4px;">
+									Search</button>
+									
+								</form>
+								</div>
+									<table id="tech-companies-1" class="table table-striped mb-0">
+										<thead>
+											<tr>
+												<th >id</th>
+												<th data-priority="1">Name product</th>
+												<th data-priority="2">Customer</th>
+												<th data-priority="3">Congfig</th>
+												<th data-priority="3">Total</th>
+												<th data-priority="3">Color</th>
+												<th data-priority="3">Creation time</th>
+												<th data-priority="3">Notes</th>
+												<th data-priority="4">Status</th>
+												<th data-priority="4">Action</th>
+
+											</tr>
+										</thead>
+										<th:block th:each="order, state : ${order}">
+										<tbody>
+
+
+											<tr th:class="${state.odd}? 'hover_tr odd':'hover_tr even'">
+												<th th:text="${order.orderId}"></th>	
+												<th th:text="${order.orderDetail.product.name}"></th>
+												<th th:text="${order.users.name}"></th>
+												<th th:text="${order.orderDetail.config}"></th>
+												<th th:text="${order.totals}"></th>
+												<th th:text="${order.orderDetail.color}"></th>
+
+												<th th:text="${order.creationTime}"></th>
+												<th th:text="${order.notes}"></th>
+												<th >
+													<select id="gender" onchange="genderChanged(this)" class="form-control" style="width: 115px;">
+																<option th:text="${order.status}"></option>
+																<option value="confirmed">confirmed</option>
+																<option value="shipping">shipping</option>
+																<option value="delivered">delivered</option>
+														</select>
+												</th>
+												
+												<th>
+													<a th:href="@{/admin/deleteorder(id=${order.orderId})}"><button
+															type="button"
+															class="btn btn-icon waves-effect waves-light btn-danger">
+															<i class="fa fa-trash"></i>
+														</button></a>
+												</th>
+												
+
+											</tr>
+
+											<!-- Repeat -->
+
+										</tbody>
+										</th:block>
+									</table>
+									<script language="javascript">
+            // Hàm xử lý khi thẻ select thay đổi giá trị được chọn
+            // obj là tham số truyền vào và cũng chính là thẻ select
+            function genderChanged(obj)
+            {
+                var message = document.getElementById('show_message');
+                var value = obj.value;
+                if (value === 'confirmed'){
+                	
+                	$.ajax({
+                	      url:"/admin/status",
+                	      type: "get",
+                	      data: new FormData($('#img_form')[0]),
+                	      contentType:false,
+                	      cache: false,
+                	      processData:false,
+                	      success:function (msg) {}
+                	      });
+                }
+                else if (value === 'shipping'){
+                    message.innerHTML = "Bạn đã chọn giới tính nam";
+                }
+                else if (value === 'delivered'){
+                    message.innerHTML = "Bạn đã chọn giới tính nữ";
+                }
+            }
+
+        </script>
+                                 
+								
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<!-- end row -->
+
+		</div>
+		<!-- end container-fluid -->
+
+	</div>
+	<!-- end content -->
+	
+	
+
+
+	<!-- Footer Start -->
+	<footer class="footer" th:replace="~{system/fragment/index ::footer}">
+
+	</footer>
+	<!-- end Footer -->
+
+	</div>
+
+		
+
+
+
+
+	<!-- Vendor js -->
+	<script src="/admin/assets\js\vendor.min.js"></script>
+
+	<!-- Responsive Table js -->
+	<script src="/admin/assets\libs\rwd-table\rwd-table.min.js"></script>
+
+	<!-- Init js -->
+	<script src="/admin/assets\js\pages\responsive-table.init.js"></script>
+
+	<!-- App js -->
+	<script src="/admin/assets\js\app.min.js"></script>
+
+</body>
+
+</html>

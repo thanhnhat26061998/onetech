@@ -21,9 +21,12 @@ public class saveProductAdminValidation implements Validator {
 
 	@Override
 	public void validate(Object o, Errors errors) {
-		ProductAdminDto prd = (ProductAdminDto) o;
-		if (prd.getName()==null) {
-			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "NotEmpty", "NotEmpty");
+		ProductAdminDto prdto = (ProductAdminDto) o;
+		if (prdto.getName()!=null && prdto.getNote()!=null) {
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "NotEmpty", "Không được để trống");
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "note", "NotEmpty");
+		}else {
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "names", "NotEmpty");
 		}
 		
 	}

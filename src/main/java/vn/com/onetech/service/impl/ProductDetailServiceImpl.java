@@ -120,6 +120,7 @@ public class ProductDetailServiceImpl implements IProductDetailService {
 				productDto.setImg2(prdDetail.getImages().getImage2());
 				productDto.setImg3(prdDetail.getImages().getImage3());
 				productDto.setColor(prdDetail.getColor().getName());
+				productDto.setNameDiscount(prdDetail.getProduct().getPromotion().getName());
 			}
 			
 

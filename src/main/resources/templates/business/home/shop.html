@@ -203,12 +203,12 @@ xmlns="http://www.w3.org/1999/xhtml"
 					<!-- Shop Content -->
 
 					<div class="shop_content">
-						<div class="row  row-cols-md-4">
+						<div class="row  row-cols-md-4" >
 								<th:block th:each="product : ${productPage}">  
-								<div>
+								<div >
 								<a th:href="@{/productdetail(id=${product.productDetailId})}" class="a_href">    
 								    <div class="card h-100">
-								      <img th:src="${product.img}" class="card-img-top" alt="...">
+								      <img th:src="${product.img}" class="card-img-top" alt="..." style="width: 237px; height: 245px;">
 								      <div class="card-body">
 								        <h3 th:text="${product.productName}"></h3>
 								        <h3 th:text="${product.rom}"></h3>

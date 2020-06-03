@@ -9,12 +9,14 @@ import lombok.Data;
 public class ProductDetailAdminDto {
 	
 	private int id;
-	private int amount;
-	private double price;
+	private String amount;
+	private String price;
 	private int colorId;
 	private int configId;
 	private int productId;
 	private String colorVsConfig;
+	private String colorVsConfigs;
 	private String image;
-
+	private String amouts;
+	private String prices;
 }

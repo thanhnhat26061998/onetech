@@ -6,6 +6,8 @@
 package vn.com.onetech.entity;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -23,6 +25,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 
 @Entity
@@ -35,7 +39,8 @@ public class Order implements Serializable{
     private int orderId;
     private String nameReceiver;
     private String deliveryAdress;
-    private String deliveryTime;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date creationTime;
     private String status;
     private String payments;
     private String notes;
@@ -43,8 +48,9 @@ public class Order implements Serializable{
     @ManyToOne
     @JoinColumn(name="userId")
     private User users;
-    @OneToMany(mappedBy = "order")
-    private List<OderDetail> orderDetail;
+    @ManyToOne
+    @JoinColumn(name = "orderDetailId")
+    private OderDetail orderDetail;
 
   
     

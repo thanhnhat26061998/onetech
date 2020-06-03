@@ -1,14 +1,16 @@
 package vn.com.onetech.controller;
 
-import java.awt.Image;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,13 +26,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import vn.com.onetech.dao.IColorDao;
 import vn.com.onetech.dao.IConfigDao;
 import vn.com.onetech.dao.IImageDao;
+import vn.com.onetech.dao.IOrderDao;
 import vn.com.onetech.dao.IProductDao;
 import vn.com.onetech.dao.IProductDetailDao;
 import vn.com.onetech.dao.IPromotionDao;
@@ -41,6 +44,7 @@ import vn.com.onetech.dto.ProductDto;
 import vn.com.onetech.entity.Color;
 import vn.com.onetech.entity.Configurator;
 import vn.com.onetech.entity.Images;
+import vn.com.onetech.entity.Order;
 import vn.com.onetech.entity.Product;
 import vn.com.onetech.entity.ProductDetail;
 import vn.com.onetech.entity.Promotion;
@@ -48,7 +52,9 @@ import vn.com.onetech.entity.Trademark;
 import vn.com.onetech.entity.User;
 import vn.com.onetech.service.IProductService;
 import vn.com.onetech.service.ImageService;
+import vn.com.onetech.service.impl.OrderServiceImpl;
 import vn.com.onetech.validation.productAdminValidation;
+import vn.com.onetech.validation.productAdminValidations;
 import vn.com.onetech.validation.saveProductAdminValidation;
 
 @Controller
@@ -56,6 +62,9 @@ public class AdminController {
 
 	@Autowired
 	private IProductService productService;
+	
+	@Autowired
+	private OrderServiceImpl orderService;
 
 	@Autowired
 	private IProductDao productDao;
@@ -68,6 +77,9 @@ public class AdminController {
 
 	@Autowired
 	private productAdminValidation prdValidation;
+	
+	@Autowired
+	private productAdminValidations prdValidations;
 	
 	@Autowired
 	private saveProductAdminValidation savePrdValidation;
@@ -86,6 +98,9 @@ public class AdminController {
 	
 	@Autowired
 	private IPromotionDao promotionDao;
+	
+	@Autowired
+	private IOrderDao orderDao;
 
 	// admin home
 
@@ -162,7 +177,6 @@ public class AdminController {
 		prdto.setName(prd.getName());
 		prdto.setNote(prd.getNotes());
 		model.addAttribute("prdto", prdto);
-
 		return "system/products/product/addPrd";
 	}
 	
@@ -170,7 +184,7 @@ public class AdminController {
 	// save product
 	
 	@PostMapping("admin/saveprd")
-	public String saveProduct(Model model, @ModelAttribute("prdto") ProductAdminDto prdDto,
+	public String saveProduct( @ModelAttribute("prdto") ProductAdminDto prdDto, Model model,
 			BindingResult bindingResult, HttpSession session) {
 		savePrdValidation.validate(prdDto, bindingResult);
 		if (bindingResult.hasErrors()) {
@@ -180,8 +194,6 @@ public class AdminController {
 			model.addAttribute("td", td);
 			List<Promotion> pr = promotionDao.findAll();
 			model.addAttribute("pr", pr);			
-			ProductDto prdto= new ProductDto();
-			model.addAttribute("prdto", prdto);
 			return "system/products/product/addPrd";
 		}
 		
@@ -207,7 +219,6 @@ public class AdminController {
 
 		User user = (User) session.getAttribute("user");
 		model.addAttribute("user", user);
-
 		Product prd = productService.findById(id);
 		model.addAttribute("prd", prd);
 		List<ProductDetail> prdDt = prd.getProductDetail();
@@ -246,18 +257,20 @@ public class AdminController {
 		ProductDetail prdDetail = productDetaiDao.findById(id).get();
 
 		ProductDetailAdminDto prdDT = new ProductDetailAdminDto();
-		prdDT.setAmount(prdDetail.getAmount());
-		prdDT.setPrice(prdDetail.getPrice());
+		prdDT.setAmount(String.valueOf(prdDetail.getAmount()));
+		prdDT.setPrice(String.valueOf(prdDetail.getPrice()));
 		prdDT.setId(prdDetail.getId());
 		prdDT.setProductId(prdDetail.getProduct().getId());
+		prdDT.setColorId(prdDetail.getColor().getId());
+		prdDT.setConfigId(prdDetail.getConfigurator().getId());
 		model.addAttribute("prdDT", prdDT);
-		return "system/products/productDetail/addPrd";
+		return "system/products/productDetail/editPrd";
 	}
 
 	// save prodduct detail
 
 	@PostMapping("admin/save")
-	public String savePrd(Model model, @ModelAttribute("prdDT") ProductDetailAdminDto prdDto,
+	public String savePrd( @ModelAttribute("prdDT") ProductDetailAdminDto prdDto, Model model,
 			BindingResult bindingResult, HttpSession session, @RequestParam("file") MultipartFile file,
 			@RequestParam("file2") MultipartFile file2) {
 		prdValidation.validate(prdDto, bindingResult);
@@ -268,19 +281,17 @@ public class AdminController {
 			model.addAttribute("config", config);
 			List<Color> color = colorDao.findAll();
 			model.addAttribute("color", color);
-			ProductDetailAdminDto prdDT = new ProductDetailAdminDto();
-			prdDT.setProductId(prdDto.getProductId());
-			model.addAttribute("prdDT", prdDT);
 			return "system/products/productDetail/addPrd";
 		}
 		Images img = new Images();
-		img.setImage1(imageService.uploadImage(file));
-		img.setImage2(imageService.uploadImage(file2));
+	
+			img.setImage1(imageService.uploadImage(file));
+			img.setImage2(imageService.uploadImage(file2));
+			imageDao.save(img);
 
-		imageDao.save(img);
 		ProductDetail prdDt = new ProductDetail();
-		prdDt.setAmount(prdDto.getAmount());
-		prdDt.setPrice(prdDto.getPrice());
+		prdDt.setAmount(Integer.parseInt(prdDto.getAmount()));
+		prdDt.setPrice(Double.parseDouble(prdDto.getPrice()));
 		prdDt.setColor(colorDao.findById(prdDto.getColorId()).get());
 		prdDt.setConfigurator(configDao.findById(prdDto.getConfigId()).get());
 		prdDt.setProduct(productService.findById(prdDto.getProductId()));
@@ -291,6 +302,41 @@ public class AdminController {
 		prdDt = productDetaiDao.save(prdDt);
 		return "redirect:/admin/productdetail?id=" + prdDto.getProductId();
 	}
+	
+	@PostMapping("admin/saves")
+	public String savePrds( @ModelAttribute("prdDT") ProductDetailAdminDto prdDto, Model model,
+			BindingResult bindingResult, HttpSession session, @RequestParam("file") MultipartFile file,
+			@RequestParam("file2") MultipartFile file2) {
+		prdValidations.validate(prdDto, bindingResult);
+		if (bindingResult.hasErrors()) {
+			User user = (User) session.getAttribute("user");
+			model.addAttribute("user", user);
+			List<Configurator> config = configDao.findAll();
+			model.addAttribute("config", config);
+			List<Color> color = colorDao.findAll();
+			model.addAttribute("color", color);
+			return "system/products/productDetail/addPrd";
+		}
+		Images img = new Images();
+	
+			img.setImage1(imageService.uploadImage(file));
+			img.setImage2(imageService.uploadImage(file2));
+			imageDao.save(img);
+
+		ProductDetail prdDt = new ProductDetail();
+		prdDt.setAmount(Integer.parseInt(prdDto.getAmount()));
+		prdDt.setPrice(Double.parseDouble(prdDto.getPrice()));
+		prdDt.setColor(colorDao.findById(prdDto.getColorId()).get());
+		prdDt.setConfigurator(configDao.findById(prdDto.getConfigId()).get());
+		prdDt.setProduct(productService.findById(prdDto.getProductId()));
+		prdDt.setImages(img);
+		if (prdDto.getId() != 0) {
+			prdDt.setId(prdDto.getId());
+		}
+		prdDt = productDetaiDao.save(prdDt);
+		return "redirect:/admin/productdetail?id=" + prdDto.getProductId();
+	}
+
 
 	// delete detail product
 
@@ -339,5 +385,67 @@ public class AdminController {
 		trademarDao.save(trademark);
 		return "redirect:/admin/product";
 	}
+	
+	//---------------------order---------------------//
+	
+	@RequestMapping("/admin/orders")
+	public String order(HttpSession session, Model model, HttpServletRequest request) {
+
+		User user = (User) session.getAttribute("user");
+		
+
+
+		model.addAttribute("user", user);
+		
+		return "system/order/list_order";
+	}
+	
+	
+	@RequestMapping("/admin/order")
+	public String orders(Model model, HttpSession session) {
+		
+		if (session.getAttribute("user")!=null) {
+			User user = (User) session.getAttribute("user");
+			model.addAttribute("user", user);
+		}
+		User user = (User) session.getAttribute("user");
+		List<Order> order = orderDao.findAll();
+		model.addAttribute("order", order);
+		model.addAttribute("user", user);
+		
+		return "system/order/list_order";
+	}
+	
+	@RequestMapping("/admin/searchs")
+	public String searchs(HttpSession session, Model model, @RequestParam("status") String status,
+			@RequestParam("begin") @DateTimeFormat(pattern = "yyyy-MM-dd") Date begin, 
+			@RequestParam("end") @DateTimeFormat(pattern = "yyyy-MM-dd") Date end) {
+	
+			List<Order> order = orderService.searchPrd( status, begin, end);
+			model.addAttribute("order", order);
+	
+		
+		User user = (User) session.getAttribute("user");
+		model.addAttribute("user", user);
+		
+		
+		
+		return "system/order/list_order";
+	}
+	
+	
+	@RequestMapping("/admin/deleteorder")
+	public String deleteOrder(@RequestParam("id") int id) {
+		Order or = orderDao.findById(id).get();
+
+			if (or.getStatus().equals("delivered")) {
+				orderDao.deleteById(id);
+			}
+
+		
+		
+		return "redirect:/admin/order";
+	}
+	
 
 }

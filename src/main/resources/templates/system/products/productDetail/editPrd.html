@@ -63,7 +63,7 @@
 										<div class="card-body">
 											<h4 class="header-title mb-4">Form row</h4>
 
-											<form action="#" th:action="@{/admin/save}"
+											<form action="#" th:action="@{/admin/saves}"
 												th:object="${prdDT}" method="post" enctype="multipart/form-data" >
 												<span class="error" th:if="${#fields.hasErrors('colorVsConfig')}" th:errors="*{colorVsConfig}"></span>
 											
