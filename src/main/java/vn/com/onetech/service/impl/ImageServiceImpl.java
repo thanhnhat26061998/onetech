@@ -22,9 +22,8 @@ public class ImageServiceImpl implements ImageService {
 		String imgPath = null;
 		
 		try {
-			byte[] bytes = file.getBytes();
 			
-			
+			byte[] bytes = file.getBytes();						
 			java.nio.file.Path path = Paths.get("uploads/img/" + file.getOriginalFilename());
 			Files.write(path, bytes);
 			imgPath = "/uploads/img/" + file.getOriginalFilename().toString();
